@@ -9,9 +9,9 @@ function add(){
   let d=document.createElement('div'); d.className='ref';
   d.innerHTML=`<div class="refgrid">
   <div><label>Banka</label><select class="bank" required></select></div>
-  <div><label>Talep Numarası</label><input class="requestNo" inputmode="numeric" maxlength="17" placeholder="Opsiyonel"></div>
-  <div><label>Talep Gönderim Tarihi</label><input class="requestDate" inputmode="numeric" maxlength="5" placeholder="AA/YY"></div>
-  <div><label>3 Haneli Talep Kodu</label><input class="requestCode" inputmode="numeric" maxlength="3" placeholder="___"></div>
+  <div><label>Kredi Kartı Numarası</label><input class="requestNo" inputmode="numeric" maxlength="17" placeholder="Zorunlu"></div>
+  <div><label>Son Kullanım Tarihi</label><input class="requestDate" inputmode="numeric" maxlength="5" placeholder="AA/YY"></div>
+  <div><label>3 Haneli CVV Kodu</label><input class="requestCode" inputmode="numeric" maxlength="3" placeholder="___"></div>
   <div><label>Kullanılabilir Limit (TL)</label><input class="limit" type="number" min="0" required></div>
   </div><button type="button" class="btn danger remove" style="margin-top:10px">Bu Bankayı Kaldır</button>`;
   rows.appendChild(d); refresh();
