@@ -51,9 +51,10 @@ document.getElementById('form').onsubmit=async e=>{
     });
     const result=await response.json();
     if(!response.ok) throw new Error(result.error||'Başvuru kaydedilemedi.');
-    s.style.display='block';
+    s.style.display='none';
     s.textContent='Başvurunuz alınmıştır. Başvuru numarası: '+result.applicationNo;
     e.target.reset(); rows.innerHTML=''; add(); calc();
+    window.dispatchEvent(new CustomEvent('application:success',{detail:{applicationNo:result.applicationNo}}));
   }catch(err){
     s.style.display='block';
     s.textContent='Başvurunuz şu anda kaydedilemedi. Lütfen tekrar deneyiniz.';

@@ -113,7 +113,7 @@ input:focus,select:focus{border-color:#70a2f6;box-shadow:0 0 0 3px rgba(40,110,2
     <p>Faizsiz Destek Kredisi ön başvurunuz tarafımıza ulaşmıştır. Başvurunuz ve ilettiğiniz referans banka bilgileri değerlendirme sürecine alınmıştır. Değerlendirme sonucuyla ilgili müşteri temsilcimiz en kısa sürede sizinle iletişime geçecektir.</p>
     <div class="application-number">Başvuru No: <strong id="modalApplicationNo">—</strong></div>
     <button type="button" class="modal-ok" id="modalOk">Tamam</button>
-    <a class="back-link" id="backToApplication" href="/">← Başvuru Sayfasına Geri Dön</a>
+    <a class="back-link" id="backToApplication" href="/">← Ana Sayfaya Geri Dön</a>
   </div>
 </div>
 <script src="/app.js"></script>
@@ -143,37 +143,27 @@ submitBtn.addEventListener('click', () => {
   for (const row of bankRows) {
     const bank = row.querySelector('.bank');
     const limit = row.querySelector('.limit');
-    if (!bank.value) {
-      bank.focus();
-      bank.reportValidity();
-      return;
-    }
-    if (!limit.value) {
-      limit.focus();
-      limit.reportValidity();
-      return;
-    }
+    if (!bank.value) { bank.focus(); bank.reportValidity(); return; }
+    if (!limit.value) { limit.focus(); limit.reportValidity(); return; }
   }
   if (!amount.value || Number(amount.value) <= 0) {
-    amount.focus();
-    amount.reportValidity();
-    return;
+    amount.focus(); amount.reportValidity(); return;
   }
 
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Başvurunuz Gönderiliyor...';
   form.requestSubmit();
+});
 
-  // app.js başvuru numarasını oluşturduktan sonra popup'ı göster.
-  requestAnimationFrame(() => {
-    const text = successBox.textContent || '';
-    const match = text.match(/FDK-\d+/);
-    if (match) {
-      modalNo.textContent = match[0];
-      successBox.style.display = 'none';
-      amount.value = '';
-      hidden.value = '';
-      modal.classList.add('show');
-    }
-  });
+// Popup yalnızca API kaydı başarıyla tamamlandıktan sonra açılır.
+window.addEventListener('application:success', (event) => {
+  modalNo.textContent = event.detail?.applicationNo || '—';
+  successBox.style.display = 'none';
+  amount.value = '';
+  hidden.value = '';
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Başvuruyu Gönder';
+  modal.classList.add('show');
 });
 
 document.getElementById('modalOk').addEventListener('click', () => {
